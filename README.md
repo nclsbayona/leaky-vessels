@@ -45,12 +45,26 @@
         <details name="section-vulnerabilities">
           <summary><h4>runc process.cwd & Leaked fds Container Breakout [CVE-2024-21626]</h4></summary>
           Manipulation of a newly spawned process' current working directory (process.cwd). This uses a file descriptor (https://www.golinuxcloud.com/linux-file-descriptors/) leak that allows an attacker to have a working directory in the host filesystem namespace (An fd is open on the current working directory so it can be used to escape a containerized environment.
+          View Video for PoC
           <br />
         </details>
       </li>
       <li>
         <details name="section-vulnerabilities">
           <summary><h4>Buildkit Mount Cache Race: Build-time Race Condition Container Breakout [CVE-2024-23651]</h4></summary>
+Buildkit offers cache volumes using the RUN --mount=type=cache directive in a Dockerfile, which allows for the mounting of a persistent directory at a controlled location during Docker image build. This functionality is intended to help improve the performance of tooling, such as package managers, by keeping the persistent cache between builds. (https://snyk.io/blog/cve-2024-23651-docker-buildkit-mount-cache-race/)
+          
+The RUN command supports a specialized cache, which you can use when you need a more fine-grained cache between runs. For example, when installing packages, you don't always need to fetch all of your packages from the internet each time. You only need the ones that have changed.
+To solve this problem, you can use RUN --mount type=cache. For example, for your Debian-based image you might use the following:
+
+
+RUN \
+    --mount=type=cache,target=/var/cache/apt \
+    apt-get update && apt-get install -y git
+    
+Using the explicit cache with the --mount flag keeps the contents of the target directory preserved between builds. When this layer needs to be rebuilt, then it'll use the apt cache in /var/cache/apt.
+
+Basically there's a delay between the checking of the existance of the directory and the syscall to mount it, so it's possible to modify the directory to be a symlink and game over.
           <br />
         </details>
       </li>
@@ -63,6 +77,7 @@
       <li>
         <details name="section-vulnerabilities">
           <summary><h4>Buildkit Build-time Container Teardown Arbitrary Delete [CVE-2024-23652]</h4></summary>
+          This attack allows an attacker to delete files from the host OS by deleting contents in a symbolic link directory mounted
         </details>
       </li>
     </ol>
@@ -72,4 +87,9 @@
 <details name="section">
   <summary><h3>Mitigations (What can I do?)</h3></summary>
   <br />
+  <ul>
+    <li>Use Podman</li>
+    <li>Use official Docker builds</li>
+    <li>Update constantly</li>
+  </ul>
 </details>
