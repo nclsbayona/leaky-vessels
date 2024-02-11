@@ -3,7 +3,7 @@
 <details name="section">
 <summary><h2>Contents</h2></summary>
   <ol>
-    <li><a href="#definition">Definition (What is Leaky Vessels?)</a></li>
+    <li>Definition (What is Leaky Vessels?)</li>
     <li>Importance (Why is knowing about Leaky Vessels important?)</li>
     <li>
       <details name="section-vulnerabilities">
@@ -22,7 +22,7 @@
 
 <hr />
 
-<details name="section" id="definition">
+<details name="section">
   <summary><h3>Definition (What is Leaky Vessels?)</h3></summary>
   <div>
     Leaky Vessels is the name given to a set of vulnerabilities discovered and reported by Snyk on 2023 but publically-listed on January 31, 2024. This set of vulnerabilities allow an attacker to escape a containerized environment and is made-uo of four vulnerabilities that target different parts of the docker architecture. <img src="https://i.stack.imgur.com/lAtSR.png" />
@@ -45,10 +45,7 @@
         <details name="section-vulnerabilities">
           <summary><h4>runc process.cwd & Leaked fds Container Breakout [CVE-2024-21626]</h4></summary>
           Manipulation of a newly spawned process' current working directory (process.cwd). This uses a file descriptor (https://www.golinuxcloud.com/linux-file-descriptors/) leak that allows an attacker to have a working directory in the host filesystem namespace (An fd is open on the current working directory so it can be used to escape a containerized environment.
-          <video width="320" height="240" controls>
-            <source src="https://youtu.be/YuWvmQ9WIhw" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+          <a href="https://youtu.be/YuWvmQ9WIhw">Watch Video Here!</a>
           <br />
         </details>
       </li>
